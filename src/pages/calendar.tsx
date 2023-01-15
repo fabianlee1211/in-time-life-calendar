@@ -1,13 +1,16 @@
-import Head from 'next/head';
-import dynamic from 'next/dynamic';
 import AppSkeleton from '@/components/AppSkeleton';
+import dynamic from 'next/dynamic';
+import Head from 'next/head';
 
-const App = dynamic(() => import('../components/AppContainer'), {
-  ssr: false,
-  loading: () => <AppSkeleton />
-});
+const DynamicCalendar = dynamic(
+  () => import('../components/CalendarContainer'),
+  {
+    ssr: false,
+    loading: () => <AppSkeleton />
+  }
+);
 
-export default function Home() {
+export default function Calendar() {
   return (
     <>
       <Head>
@@ -17,7 +20,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <section className="max-w-screen-2xl px-6 lg:px-12 m-auto w-full">
-        <App />
+        <DynamicCalendar />
       </section>
     </>
   );
