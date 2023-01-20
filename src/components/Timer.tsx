@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { add, parseISO, format } from 'date-fns';
 import { AnimatePresence, easeIn, motion } from 'framer-motion';
 import { leftFillNum } from '@/utils';
+import { useMedia } from 'react-use';
 
 const second = 1000;
 const minute = second * 60;
@@ -26,6 +27,8 @@ export default function Timer({
   birthDate: string;
   onReset: () => void;
 }) {
+  const isSm = useMedia('(min-width: 640px)');
+  const isMd = useMedia('(min-width: 768px)');
   const [timeLeft, setTimeLeft] = useState(startingTimeLeft);
   const [isEnded, setIsEnded] = useState(false);
 
@@ -59,6 +62,8 @@ export default function Timer({
 
   useInterval(() => calculateTimeLeft(expectedDeath), 1000, isEnded);
 
+  const digitWidth = isMd ? 38 : isSm ? 26 : 16;
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -74,22 +79,26 @@ export default function Timer({
         {`${formattedStart} - ${formattedEnd}`}
       </p>
       <div className="flex justify-center items-center">
-        {Object.entries(timeLeft).map(([type, time], sectionIndex) => {
+        {Object.entries(timeLeft).map(([type, time], sectionIndex, entries) => {
           return (
             <React.Fragment key={type}>
               <motion.div className="flex items-center text-center justify-around">
                 <motion.div
-                  className={classNames('flex relative h-[72px]', {
-                    'w-[156px]': type === 'years',
-                    'w-[39px]': type === 'days',
-                    'w-[78px]': type !== 'years' && type !== 'days'
-                  })}
+                  className={classNames(
+                    'flex relative h-[36px] sm:h-[48px] md:h-[72px]',
+                    {
+                      'w-[64px] sm:w-[104px] md:w-[156px]': type === 'years',
+                      'w-[16px] sm:w-[26px] md:w-[39px]': type === 'days',
+                      'w-[32px] sm:w-[52px] md:w-[78px]':
+                        type !== 'years' && type !== 'days'
+                    }
+                  )}
                 >
                   <AnimatePresence>
                     {time.split('').map((digit, i) => {
                       return (
                         <motion.p
-                          key={`${type}-${sectionIndex}-${digit}-${i}`}
+                          key={`${type}-${digit}-${i}`}
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           exit={{ opacity: 0 }}
@@ -98,13 +107,13 @@ export default function Timer({
                             ease: easeIn
                           }}
                           className={classNames(
-                            ' text-3xl sm:text-5xl font-thin tabular-nums md:text-7xl tracking-tighter absolute top-0',
+                            `text-3xl sm:text-5xl font-thin tabular-nums md:text-7xl tracking-tighter absolute top-0`,
                             {
                               'text-digit neon-shadow': !isEnded,
                               'text-zinc-800 gray-shadow': isEnded
                             }
                           )}
-                          style={{ left: `${i * 38}px` }}
+                          style={{ left: `${i * digitWidth}px` }}
                         >
                           {digit}
                         </motion.p>
@@ -113,7 +122,7 @@ export default function Timer({
                   </AnimatePresence>
                 </motion.div>
               </motion.div>
-              {sectionIndex !== Object.values(timeLeft).length - 1 && (
+              {sectionIndex !== entries.length - 1 && (
                 <span
                   className={classNames(
                     'mx-2 w-1 h-1 sm:h-2 sm:w-2 rounded-full',
