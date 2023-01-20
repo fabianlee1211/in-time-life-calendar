@@ -2,12 +2,13 @@ import { useLocalStorage } from 'react-use';
 import BirthDateForm from './BirthDateForm';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useConfig } from '@/hooks';
 
 export default function AppContainer() {
   const router = useRouter();
-  const [storageValue] = useLocalStorage<string>('inTime_birthDate', '');
+  const [config] = useConfig();
 
-  if (storageValue) {
+  if (config?.birthDate) {
     router.replace('/calendar');
     return null;
   }

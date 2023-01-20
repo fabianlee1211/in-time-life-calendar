@@ -4,6 +4,7 @@ import { add, parseISO, format } from 'date-fns';
 import { AnimatePresence, easeIn, motion } from 'framer-motion';
 import { leftFillNum } from '@/utils';
 import { useMedia } from 'react-use';
+import { useInterval } from '@/hooks';
 
 const second = 1000;
 const minute = second * 60;
@@ -22,9 +23,11 @@ const startingTimeLeft = {
 
 export default function Timer({
   birthDate,
+  expectedLifespan,
   onReset
 }: {
   birthDate: string;
+  expectedLifespan: number;
   onReset: () => void;
 }) {
   const isSm = useMedia('(min-width: 640px)');
@@ -56,7 +59,7 @@ export default function Timer({
     }
   }
 
-  const expectedDeath = add(parseISO(birthDate), { years: 80 });
+  const expectedDeath = add(parseISO(birthDate), { years: expectedLifespan });
   const formattedStart = format(parseISO(birthDate), 'd MMM yyyy');
   const formattedEnd = format(expectedDeath, 'd MMM yyyy');
 
@@ -78,7 +81,7 @@ export default function Timer({
       <p className="text-center mb-2 text-digit">
         {`${formattedStart} - ${formattedEnd}`}
       </p>
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center select-none">
         {Object.entries(timeLeft).map(([type, time], sectionIndex, entries) => {
           return (
             <React.Fragment key={type}>
@@ -152,42 +155,4 @@ export default function Timer({
       </button>
     </motion.div>
   );
-}
-
-// Custom useInterval hook with optional stop condition
-function useInterval(
-  callback: Function,
-  delay?: number | null,
-  shouldStop?: boolean
-) {
-  const savedCallback = useRef<Function>(() => {});
-  const savedInterval = useRef<NodeJS.Timeout | null>(null);
-
-  useEffect(() => {
-    savedCallback.current = callback;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (delay !== null) {
-      savedInterval.current = setInterval(
-        () => savedCallback.current(),
-        delay || 0
-      );
-
-      return () =>
-        savedInterval.current
-          ? clearInterval(savedInterval.current)
-          : undefined;
-    }
-
-    return undefined;
-  }, [delay]);
-
-  useEffect(() => {
-    if (shouldStop) {
-      savedInterval.current && clearInterval(savedInterval.current);
-    }
-    return undefined;
-  }, [shouldStop]);
 }
