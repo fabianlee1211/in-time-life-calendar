@@ -32,3 +32,7 @@ h6 {
 .neon-shadow {
   text-shadow: 0 0 7px #0fa, 0 0 10px #00ff10, 0 0 21px #00ff9f;
 }
+
+.gray-shadow {
+  text-shadow: 0 0 7px #0d0d0d;
+}

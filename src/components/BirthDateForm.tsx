@@ -1,4 +1,4 @@
-import { format, subDays, subYears } from 'date-fns';
+import { format, subDays, subYears, isBefore, isAfter } from 'date-fns';
 import { useState } from 'react';
 import { useLocalStorage } from 'react-use';
 import cn from 'classnames';
@@ -15,7 +15,11 @@ export default function BirthDateForm() {
   const [error, setError] = useState(false);
 
   function handleSubmit() {
-    if (!value) {
+    if (
+      !value ||
+      isBefore(new Date(value), minDate) ||
+      isAfter(new Date(value), maxDate)
+    ) {
       setError(true);
     } else {
       setError(false);

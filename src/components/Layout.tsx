@@ -1,6 +1,8 @@
 import { Inter } from '@next/font/google';
 import Link from 'next/link';
 import cn from 'classnames';
+import { useLocalStorage } from 'react-use';
+import { useRouter } from 'next/router';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
@@ -20,6 +22,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           {`© ${year} by Fabian Lee | In Time Life Calendar`}
         </p>
         <ul className="flex text-sm space-x-4">
+          <li className="hover:opacity-100 opacity-30 transition-opacity">
+            <Link href="/about">About</Link>
+          </li>
           <li className="hover:opacity-100 opacity-30 transition-opacity">
             <a href="https://github.com/fabianlee1211/in-time-life-calendar">
               GitHub

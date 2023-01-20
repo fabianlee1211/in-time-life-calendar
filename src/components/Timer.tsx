@@ -1,37 +1,184 @@
+import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
-import React, { useState } from 'react';
+import { add, parseISO, format } from 'date-fns';
+import { AnimatePresence, easeIn, motion } from 'framer-motion';
+import { leftFillNum } from '@/utils';
 
-export default function Timer() {
-  const [counts, setCounts] = useState(
-    Array.from({ length: 10 }, (_, i) => i + 1)
-  );
-  const [currentIndex, setCurrentIndex] = useState(0);
+const second = 1000;
+const minute = second * 60;
+const hour = minute * 60;
+const day = hour * 24;
+const week = day * 7;
+const year = week * 52;
+const startingTimeLeft = {
+  years: '0000',
+  weeks: '00',
+  days: '0',
+  hours: '00',
+  minutes: '00',
+  seconds: '00'
+};
 
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % counts.length);
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
+export default function Timer({
+  birthDate,
+  onReset
+}: {
+  birthDate: string;
+  onReset: () => void;
+}) {
+  const [timeLeft, setTimeLeft] = useState(startingTimeLeft);
+  const [isEnded, setIsEnded] = useState(false);
+
+  function pronounceDead() {
+    setTimeLeft(startingTimeLeft);
+    setIsEnded(true);
+  }
+
+  function calculateTimeLeft(expectedDeath: Date) {
+    const difference = expectedDeath.getTime() - new Date().getTime();
+
+    if (difference > 0) {
+      setTimeLeft({
+        years: leftFillNum(Math.floor(difference / year), 4),
+        weeks: leftFillNum(Math.floor((difference % year) / week)),
+        days: leftFillNum(Math.floor((difference % week) / day), 1),
+        hours: leftFillNum(Math.floor((difference % day) / hour)),
+        minutes: leftFillNum(Math.floor((difference % hour) / minute)),
+        seconds: leftFillNum(Math.floor((difference % minute) / second))
+      });
+    }
+
+    if (difference <= 0) {
+      pronounceDead();
+    }
+  }
+
+  const expectedDeath = add(parseISO(birthDate), { years: 80 });
+  const formattedStart = format(parseISO(birthDate), 'd MMM yyyy');
+  const formattedEnd = format(expectedDeath, 'd MMM yyyy');
+
+  useInterval(() => calculateTimeLeft(expectedDeath), 1000, isEnded);
 
   return (
-    <div className="flex justify-center items-center h-screen">
-      <div className="text-6xl text-center text-gray-600 relative">
-        {counts.map((count, index) => (
-          <span
-            key={count}
-            className={classNames(
-              'absolute top-0 left-0 transition opacity-0 duration-700',
-              {
-                'opacity-100': index === currentIndex,
-                'opacity-0': index !== currentIndex
-              }
-            )}
-          >
-            {count.toString().padStart(2, '0')}
-          </span>
-        ))}
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{
+        duration: 0.8,
+        delay: 0.5,
+        ease: easeIn
+      }}
+      className="flex flex-col items-center justify-center"
+    >
+      <p className="text-center mb-2 text-digit">
+        {`${formattedStart} - ${formattedEnd}`}
+      </p>
+      <div className="flex justify-center items-center">
+        {Object.entries(timeLeft).map(([type, time], sectionIndex) => {
+          return (
+            <React.Fragment key={type}>
+              <motion.div className="flex items-center text-center justify-around">
+                <motion.div
+                  className={classNames('flex relative h-[72px]', {
+                    'w-[156px]': type === 'years',
+                    'w-[39px]': type === 'days',
+                    'w-[78px]': type !== 'years' && type !== 'days'
+                  })}
+                >
+                  <AnimatePresence>
+                    {time.split('').map((digit, i) => {
+                      return (
+                        <motion.p
+                          key={`${type}-${sectionIndex}-${digit}-${i}`}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{
+                            duration: 0.5,
+                            ease: easeIn
+                          }}
+                          className={classNames(
+                            ' text-3xl sm:text-5xl font-thin tabular-nums md:text-7xl tracking-tighter absolute top-0',
+                            {
+                              'text-digit neon-shadow': !isEnded,
+                              'text-zinc-800 gray-shadow': isEnded
+                            }
+                          )}
+                          style={{ left: `${i * 38}px` }}
+                        >
+                          {digit}
+                        </motion.p>
+                      );
+                    })}
+                  </AnimatePresence>
+                </motion.div>
+              </motion.div>
+              {sectionIndex !== Object.values(timeLeft).length - 1 && (
+                <span
+                  className={classNames(
+                    'mx-2 w-1 h-1 sm:h-2 sm:w-2 rounded-full',
+                    {
+                      'bg-digit shadow-neon': !isEnded,
+                      'bg-zinc-800': isEnded
+                    }
+                  )}
+                />
+              )}
+            </React.Fragment>
+          );
+        })}
       </div>
-    </div>
+      <button
+        onClick={onReset}
+        className="btn btn-outline btn-xs mt-3 opacity-10 hover:opacity-50"
+      >
+        Change
+      </button>
+      {/* TODO: Remove when done */}
+      <button
+        onClick={pronounceDead}
+        className="btn btn-outline btn-xs mt-3 opacity-10 hover:opacity-50"
+      >
+        Die
+      </button>
+    </motion.div>
   );
+}
+
+// Custom useInterval hook with optional stop condition
+function useInterval(
+  callback: Function,
+  delay?: number | null,
+  shouldStop?: boolean
+) {
+  const savedCallback = useRef<Function>(() => {});
+  const savedInterval = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    savedCallback.current = callback;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (delay !== null) {
+      savedInterval.current = setInterval(
+        () => savedCallback.current(),
+        delay || 0
+      );
+
+      return () =>
+        savedInterval.current
+          ? clearInterval(savedInterval.current)
+          : undefined;
+    }
+
+    return undefined;
+  }, [delay]);
+
+  useEffect(() => {
+    if (shouldStop) {
+      savedInterval.current && clearInterval(savedInterval.current);
+    }
+    return undefined;
+  }, [shouldStop]);
 }
