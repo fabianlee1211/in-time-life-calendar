@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import cn from 'classnames';
-import { add, parseISO, format } from 'date-fns';
+import { add, parseISO, format, differenceInMilliseconds } from 'date-fns';
 import { AnimatePresence, easeIn, motion } from 'framer-motion';
 import { leftFillNum } from '@/utils';
 import { useMedia } from 'react-use';
@@ -41,7 +41,7 @@ export default function Timer({
   }
 
   function calculateTimeLeft(expectedDeath: Date) {
-    const difference = expectedDeath.getTime() - new Date().getTime();
+    const difference = differenceInMilliseconds(expectedDeath, new Date());
 
     if (difference > 0) {
       setTimeLeft({
@@ -78,6 +78,7 @@ export default function Timer({
       }}
       className="flex flex-col items-center justify-center py-8"
     >
+      <p className="text-center mb-2 text-zinc-700 text-sm font-semibold">{`${expectedLifespan} Years of Living`}</p>
       <p className="text-center mb-2 text-digit">
         {`${formattedStart} - ${formattedEnd}`}
       </p>
@@ -87,8 +88,9 @@ export default function Timer({
             <React.Fragment key={type}>
               <motion.div className="flex items-center text-center justify-around">
                 <motion.div
+                  data-tip={toTitleCase(type)}
                   className={cn(
-                    'flex relative h-[36px] sm:h-[48px] md:h-[72px]',
+                    'flex relative h-[36px] sm:h-[48px] md:h-[72px] tooltip tooltip-bottom tooltip-primary',
                     {
                       'w-[64px] sm:w-[104px] md:w-[156px]': type === 'years',
                       'w-[16px] sm:w-[26px] md:w-[39px]': type === 'days',
@@ -143,13 +145,12 @@ export default function Timer({
       >
         Change
       </button>
-      {/* TODO: Remove when done */}
-      <button
-        onClick={pronounceDead}
-        className="btn btn-outline btn-xs mt-3 opacity-10 hover:opacity-50"
-      >
-        Die
-      </button>
     </motion.div>
   );
+}
+
+function toTitleCase(str: string) {
+  return str.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase();
+  });
 }
