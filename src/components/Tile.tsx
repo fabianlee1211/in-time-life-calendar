@@ -1,31 +1,40 @@
-export default function Tile({
+import { memo } from 'react';
+
+function Tile({
   progress,
-  week
+  week,
+  isActive = false
 }: {
   progress: number;
   week: number;
+  isActive?: boolean;
 }) {
   return (
-    <svg
-      className="w-2 h-2 sm:w-4 sm:h-4"
-      width="100%"
-      height="100%"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect
-        className="h-2 sm:h-4 stroke-digit fill-digit stroke-2 transition-all"
-        width={`${progress * 100}%`}
-        height="100%"
-        data-week={week}
-      />
-      <rect
-        className={`w-2 h-2 sm:h-4 sm:w-4 stroke-2 fill-transparent ${
-          progress === 0 ? 'stroke-digit/20' : 'stroke-digit'
-        }`}
-        width="100%"
-        height="100%"
-        data-week={week}
-      />
-    </svg>
+    <div className="relative tooltip" data-tip={week}>
+      <svg
+        className="max-w-full max-h-full w-3 h-3 sm:w-4 sm:h-4"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect
+          className="h-3 sm:h-4 stroke-digit/60 fill-digit/70 stroke-2 transition-all"
+          width={`${progress * 100}%`}
+          height="100%"
+          data-week={week}
+        />
+        <rect
+          className={`w-3 h-3 sm:h-4 sm:w-4 stroke-2 fill-transparent ${
+            progress === 0 ? 'stroke-digit/10' : 'stroke-digit/60'
+          }`}
+          width="100%"
+          height="100%"
+          data-week={week}
+        />
+      </svg>
+      {isActive && (
+        <span className="absolute bg-digit animate-ping inline-flex h-full w-full inset-0" />
+      )}
+    </div>
   );
 }
+
+export default memo(Tile);
