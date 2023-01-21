@@ -76,7 +76,7 @@ export default function Timer({
         delay: 0.5,
         ease: easeIn
       }}
-      className="flex flex-col items-center justify-center"
+      className="flex flex-col items-center justify-center py-8"
     >
       <p className="text-center mb-2 text-digit">
         {`${formattedStart} - ${formattedEnd}`}

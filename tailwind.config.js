@@ -15,7 +15,7 @@ module.exports = {
         digit: '#e4ffc3'
       },
       boxShadow: {
-        neon: '0 0 10px hsla(160, 100%, 50%, 1)'
+        neon: '0 0 10px #98d58c'
       }
     }
   },
@@ -23,7 +23,7 @@ module.exports = {
     themes: [
       {
         mytheme: {
-          primary: '#40f994',
+          primary: '#98d58c',
           secondary: '#fcf8ba',
           accent: '#fc9b88',
           neutral: '#1F1F29',
