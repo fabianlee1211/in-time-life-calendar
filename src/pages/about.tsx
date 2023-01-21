@@ -91,16 +91,18 @@ export default function About() {
           height={175}
         />
         <p>
-          The timer and the digitalized life calendar will be filled
-          automatically once you provide a birth date. The squares will be
-          updated every minute so you don't have to refresh the page to see the
-          changes.
+          The In Time Life Calendar is an inspirational tool that automatically
+          fills in your remaining lifespan once you provide your birthdate and
+          expected lifespan. The calendar updates in real-time, so you never
+          have to refresh the page to see the changes.
         </p>
         <p>
-          Whenever you start complaing, resenting, procrastinating or whatever
-          that's halting yourself, come and have a glimpse on how much time you
-          are letting go. Ask yourself is it worth letting it tick away? Could I
-          have made more use of it?
+          This tool serves as a powerful reminder to make the most of the time
+          we have and to live our lives to the fullest. Whenever you find
+          yourself feeling stuck or wasting time, take a glance at the calendar
+          and ask yourself, "Is this moment worth letting slip away?" Use the In
+          Time Life Calendar as a tool to stay motivated and make the most of
+          every precious moment."
         </p>
         <blockquote>
           Determine never to be idle. No person will have occasion to complain
