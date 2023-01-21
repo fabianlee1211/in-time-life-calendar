@@ -1,4 +1,4 @@
-import { format, subDays, subYears, isBefore, isAfter } from 'date-fns';
+import { format, subDays, subYears, isBefore } from 'date-fns';
 import cn from 'classnames';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
@@ -18,7 +18,14 @@ const schema = z
       })
       .max(subDays(new Date(), 1), "You can't be born in the future.")
       .transform((val) => String(val)),
-    expectedLifespan: z.coerce.number().min(1).max(100)
+    expectedLifespan: z.coerce
+      .number()
+      .min(1, { message: 'You will probably live longer than that.' })
+      .max(120, {
+        message:
+          'Like your optimism but human beings are unlikely to live that long.'
+      })
+      .int('Please enter a whole number.')
   })
   .required()
   .superRefine((val, ctx) => {
@@ -90,7 +97,7 @@ export default function BirthDateForm() {
       </div>
       <div>
         <label className="label">
-          <span className="label-text">Expected lifespan</span>
+          <span className="label-text">How long do you expect to live?</span>
         </label>
         <label className="input-group">
           <input
@@ -111,7 +118,7 @@ export default function BirthDateForm() {
         </label>
       </div>
       <button type="submit" className="btn btn-primary btn-block mt-4">
-        Submit
+        Ready
       </button>
     </form>
   );
