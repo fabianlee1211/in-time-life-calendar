@@ -16,7 +16,7 @@ export default function Logo() {
           rx="15"
           fill="#98D58C"
           stroke="#98D58C"
-          stroke-width="10"
+          strokeWidth="10"
         />
         <rect
           x="5"
@@ -26,7 +26,7 @@ export default function Logo() {
           rx="15"
           fill="#98D58C"
           stroke="#98D58C"
-          stroke-width="10"
+          strokeWidth="10"
         />
         <rect
           x="351"
@@ -35,7 +35,7 @@ export default function Logo() {
           height="266"
           rx="10"
           stroke="#98D58C"
-          stroke-width="20"
+          strokeWidth="20"
         />
         <rect
           x="346"
@@ -45,7 +45,7 @@ export default function Logo() {
           rx="15"
           fill="#98D58C"
           stroke="#98D58C"
-          stroke-width="10"
+          strokeWidth="10"
         />
       </svg>
     </div>
