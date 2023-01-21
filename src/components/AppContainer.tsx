@@ -2,6 +2,7 @@ import BirthDateForm from './BirthDateForm';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useConfig } from '@/hooks';
+import Logo from './Logo';
 
 export default function AppContainer() {
   const router = useRouter();
@@ -14,11 +15,12 @@ export default function AppContainer() {
 
   return (
     <div className="grid md:grid-cols-12 gap-8">
-      <div className="md:col-span-7 lg:col-span-8 space-y-4 self-center max-w-2xl">
-        <h1 className="text-6xl font-bold text-gray-100">
+      <div className="md:col-span-7 lg:col-span-8 self-center max-w-2xl">
+        <Logo />
+        <h1 className="text-5xl md:text-6xl font-bold text-gray-100 my-4">
           Realize the value of every moment
         </h1>
-        <p className="text-xl text-gray-500">
+        <p className="text-xl text-gray-500 mb-8">
           <span className="font-semibold text-primary">
             In Time Life Calendar
           </span>{' '}
