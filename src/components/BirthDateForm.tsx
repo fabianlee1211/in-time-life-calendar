@@ -16,7 +16,10 @@ const schema = z
           };
         }
       })
-      .max(subDays(new Date(), 1), "You can't be born in the future.")
+      .max(
+        new Date(format(new Date(), 'yyyy-MM-dd')),
+        "You can't be born in the future."
+      )
       .transform((val) => String(val)),
     expectedLifespan: z.coerce
       .number()
