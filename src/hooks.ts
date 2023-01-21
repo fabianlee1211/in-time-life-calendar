@@ -1,16 +1,27 @@
 import { useEffect, useRef } from 'react';
-import { useLocalStorage } from 'react-use';
+import { useCookie, useLocalStorage } from 'react-use';
 
 export const DEFAULT_CONFIG = {
   birthDate: '',
   expectedLifespan: 80
 };
 
-export function useConfig() {
-  return useLocalStorage<typeof DEFAULT_CONFIG>(
-    'in-time-app-configs',
-    DEFAULT_CONFIG
-  );
+export function useConfig<T = typeof DEFAULT_CONFIG>() {
+  const [value, setValue, remove] = useCookie('in-time-app-configs');
+
+  function setConfig(config: typeof DEFAULT_CONFIG) {
+    setValue(JSON.stringify(config), {
+      sameSite: 'strict',
+      expires: 365,
+      secure: process.env.NODE_ENV === 'production'
+    });
+  }
+
+  return [value ? JSON.parse(value) : DEFAULT_CONFIG, setConfig, remove] as [
+    T,
+    typeof setConfig,
+    typeof remove
+  ];
 }
 
 // Custom useInterval hook with optional stop condition
