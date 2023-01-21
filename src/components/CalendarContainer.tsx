@@ -15,7 +15,7 @@ export default function CalendarContainer() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!config) {
+  if (!config?.birthDate) {
     router.replace('/');
     return null;
   }

@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import classNames from 'classnames';
+import React, { useState } from 'react';
+import cn from 'classnames';
 import { add, parseISO, format } from 'date-fns';
 import { AnimatePresence, easeIn, motion } from 'framer-motion';
 import { leftFillNum } from '@/utils';
@@ -87,7 +87,7 @@ export default function Timer({
             <React.Fragment key={type}>
               <motion.div className="flex items-center text-center justify-around">
                 <motion.div
-                  className={classNames(
+                  className={cn(
                     'flex relative h-[36px] sm:h-[48px] md:h-[72px]',
                     {
                       'w-[64px] sm:w-[104px] md:w-[156px]': type === 'years',
@@ -109,7 +109,7 @@ export default function Timer({
                             duration: 0.5,
                             ease: easeIn
                           }}
-                          className={classNames(
+                          className={cn(
                             `text-3xl sm:text-5xl font-thin tabular-nums md:text-7xl tracking-tighter absolute top-0`,
                             {
                               'text-digit neon-shadow': !isEnded,
@@ -127,13 +127,10 @@ export default function Timer({
               </motion.div>
               {sectionIndex !== entries.length - 1 && (
                 <span
-                  className={classNames(
-                    'mx-2 w-1 h-1 sm:h-2 sm:w-2 rounded-full',
-                    {
-                      'bg-digit shadow-neon': !isEnded,
-                      'bg-zinc-800': isEnded
-                    }
-                  )}
+                  className={cn('mx-2 w-1 h-1 sm:h-2 sm:w-2 rounded-full', {
+                    'bg-digit shadow-neon': !isEnded,
+                    'bg-zinc-800': isEnded
+                  })}
                 />
               )}
             </React.Fragment>

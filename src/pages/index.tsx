@@ -16,7 +16,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <section className="max-w-screen-2xl px-6 lg:px-12 m-auto w-full">
+      <section className="max-w-screen-2xl px-6 lg:px-12 mx-auto w-full flex-1 flex flex-col items-center justify-center">
         <App />
       </section>
     </>
