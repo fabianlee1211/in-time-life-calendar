@@ -10,7 +10,7 @@ function Tile({
   isActive?: boolean;
 }) {
   return (
-    <div className="relative tooltip" data-tip={week}>
+    <div className="relative">
       <svg
         className="max-w-full max-h-full w-3 h-3 sm:w-4 sm:h-4"
         xmlns="http://www.w3.org/2000/svg"
