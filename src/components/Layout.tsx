@@ -1,8 +1,6 @@
 import { Inter } from '@next/font/google';
 import Link from 'next/link';
 import cn from 'classnames';
-import { useLocalStorage } from 'react-use';
-import { useRouter } from 'next/router';
 import Head from 'next/head';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
@@ -30,6 +28,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           sizes="16x16"
           href="/favicon-16x16.png"
         />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="manifest" href="/site.webmanifest" />
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#98d58c" />
         <meta name="msapplication-TileColor" content="#333333" />
@@ -49,6 +48,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <ul className="flex text-sm space-x-4">
             <li className="hover:opacity-100 opacity-30 transition-opacity">
               <Link href="/about">About</Link>
+            </li>
+            <li className="hover:opacity-100 opacity-30 transition-opacity">
+              <Link href="/privacy">Privacy Policy</Link>
             </li>
             <li className="hover:opacity-100 opacity-30 transition-opacity">
               <a href="https://github.com/fabianlee1211/in-time-life-calendar">

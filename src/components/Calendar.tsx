@@ -7,7 +7,7 @@ import {
 } from 'date-fns';
 import { useInterval } from '@/hooks';
 import Tile from './Tile';
-import { circIn, easeIn, motion } from 'framer-motion';
+import { circIn, motion } from 'framer-motion';
 
 const weeksInOneYear = 52;
 const weeksInHalfYear = weeksInOneYear / 2;
@@ -58,7 +58,7 @@ export default function Calendar({
           <motion.div
             key={year}
             variants={item}
-            className={`tooltip grid grid-cols-1 xl:grid-cols-2 gap-1 sm:gap-2 xl:gap-12 mx-auto relative w-max hover:bg-digit/5 ${
+            className={`tooltip tooltip-primary grid grid-cols-1 xl:grid-cols-2 gap-1 sm:gap-2 xl:gap-12 mx-auto relative w-max hover:bg-digit/5 ${
               year % 10 === 0 ? 'mb-8 sm:mb-10' : 'mb-1 sm:mb-2'
             }`}
             data-tip={`Year ${year}`}
