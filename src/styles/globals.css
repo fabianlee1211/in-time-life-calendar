@@ -25,10 +25,14 @@ h6 {
 
 input[type='date'] {
   display: block;
-  /* Solution 1 */
   -webkit-appearance: textfield;
   -moz-appearance: textfield;
   min-height: 1.2em;
+}
+
+input::-webkit-datetime-edit {
+  display: block;
+  padding: 0;
 }
 
 #__next > main {
