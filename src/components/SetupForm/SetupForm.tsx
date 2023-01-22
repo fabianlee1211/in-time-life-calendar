@@ -1,52 +1,20 @@
-import { format, subDays, subYears, isBefore } from 'date-fns';
+import {
+  format,
+  subDays,
+  subYears,
+  isBefore,
+  isSameDay,
+  isValid,
+  isAfter
+} from 'date-fns';
 import cn from 'classnames';
 import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import { DEFAULT_CONFIG, useConfig } from '@/hooks';
-
-const schema = z
-  .object({
-    birthDate: z.coerce
-      .date({
-        errorMap: () => {
-          return {
-            message: 'Please enter a valid date.'
-          };
-        }
-      })
-      .max(
-        new Date(format(new Date(), 'yyyy-MM-dd')),
-        "You can't be born in the future."
-      )
-      .transform((val) => String(val)),
-    expectedLifespan: z.coerce
-      .number()
-      .min(1, { message: 'You will probably live longer than that.' })
-      .max(120, {
-        message:
-          'Like your optimism but human beings are unlikely to live that long.'
-      })
-      .int('Please enter a whole number.')
-  })
-  .required()
-  .superRefine((val, ctx) => {
-    if (
-      isBefore(
-        new Date(val.birthDate),
-        subYears(new Date(), val.expectedLifespan + 1)
-      )
-    ) {
-      return ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: `Your expected lifespan is longer than your age.`,
-        path: ['expectedLifespan']
-      });
-    }
-  });
-
-type FormValues = z.infer<typeof schema>;
+import DatePicker, { CalendarContainer } from 'react-datepicker';
+import classNames from 'classnames';
+import { schema, type SetupFormValues } from './schema';
 
 export default function SetupForm() {
   const router = useRouter();
@@ -55,13 +23,14 @@ export default function SetupForm() {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors }
   } = useForm({
     resolver: zodResolver(schema),
     defaultValues: DEFAULT_CONFIG
   });
 
-  function onSubmit(data: FormValues) {
+  function onSubmit(data: SetupFormValues) {
     setConfig({
       birthDate: format(new Date(data.birthDate), 'yyyy-MM-dd'),
       expectedLifespan: data.expectedLifespan
@@ -80,13 +49,43 @@ export default function SetupForm() {
             What's your birth date?
           </span>
         </label>
-        <input
-          type="date"
-          {...register('birthDate')}
-          placeholder="Enter your birth date"
-          className={cn('input input-bordered w-full', {
-            'input-error': !!errors.birthDate
-          })}
+        <Controller
+          control={control}
+          name="birthDate"
+          render={({ field }) => (
+            <DatePicker
+              dateFormat="yyyy/MM/dd"
+              selected={field.value ? new Date(field.value) : null}
+              placeholderText="Enter your birth date"
+              onChange={(date) => field.onChange(date)}
+              customInput={
+                <input
+                  className={cn('input input-bordered w-full', {
+                    'input-error': !!errors.birthDate
+                  })}
+                />
+              }
+              calendarContainer={({ className, children }) => {
+                return (
+                  <CalendarContainer
+                    className={classNames(
+                      className,
+                      'border-zinc-700 border-1 bg-base-100 rounded-md'
+                    )}
+                  >
+                    {children}
+                  </CalendarContainer>
+                );
+              }}
+              dayClassName={(date) => {
+                const isSelectedDate = isSameDay(date, new Date(field.value));
+                return classNames('text-zinc-500 font-medium', {
+                  'bg-primary text-white hover:bg-primary/50': isSelectedDate,
+                  'hover:bg-zinc-700 bg-base-100': !isSelectedDate
+                });
+              }}
+            />
+          )}
         />
         <label className="label">
           {!!errors.birthDate && (
