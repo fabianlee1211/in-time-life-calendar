@@ -4,7 +4,11 @@ import cn from 'classnames';
 import { DefaultSeo } from 'next-seo';
 import seoConfig from 'next-seo.config';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap'
+});
 
 const year = new Date().getFullYear();
 
