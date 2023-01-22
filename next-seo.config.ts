@@ -1,10 +1,10 @@
 import { DefaultSeoProps } from 'next-seo';
 
 export const siteUrl =
-  process.env.VERCEL_ENV === 'development'
+  process.env.NEXT_PUBLIC_VERCEL_URL === 'development'
     ? 'http://localhost:3000'
-    : process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
+    : process.env.NEXT_PUBLIC_VERCEL_URL
+    ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
     : 'http://localhost:3000';
 
 const seoConfig: DefaultSeoProps = {
