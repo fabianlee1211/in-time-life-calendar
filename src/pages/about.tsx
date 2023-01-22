@@ -80,7 +80,8 @@ export default function About() {
         <h2 className="text-digit">How to use it?</h2>
         <p>
           The timer is formatted as it was in the movie. And the calendar works
-          exactly the same as the handwritten one.
+          exactly the same as the handwritten one. The only difference is that
+          you can also provide your expected lifespan.
         </p>
         <Image
           src="/images/timer-explanation.png"
@@ -89,8 +90,8 @@ export default function About() {
           height={175}
         />
         <p>
-          The In Time Life Calendar is an inspirational tool that automatically
-          fills in your remaining lifespan once you provide your birthdate and
+          The In Time Life Calendar is a reminder tool that automatically fills
+          in your remaining lifespan once you provide your birth date and
           expected lifespan. The calendar updates in real-time, so you never
           have to refresh the page to see the changes.
         </p>
