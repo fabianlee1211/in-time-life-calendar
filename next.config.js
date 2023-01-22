@@ -9,6 +9,13 @@ const nextConfig = {
         headers: securityHeaders
       }
     ];
+  },
+  webpack: (config, { dev, isServer }) => {
+    if (!dev && isServer) {
+      require('../scripts/gen-sitemap');
+    }
+
+    return config;
   }
 };
 

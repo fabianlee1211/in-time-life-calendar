@@ -14,6 +14,7 @@ const seoConfig: DefaultSeoProps = {
   openGraph: {
     type: 'website',
     url: siteUrl,
+    siteName: 'In Time Life Calendar',
     images: [
       {
         url: `${siteUrl}/images/in-time-life-calendar-social-card.png`,
