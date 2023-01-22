@@ -23,14 +23,6 @@ h6 {
   letter-spacing: -0.025em;
 }
 
-input[type='date'] {
-  display: block;
-  /* Solution 1 */
-  -webkit-appearance: textfield;
-  -moz-appearance: textfield;
-  min-height: 1.2em;
-}
-
 #__next > main {
   min-height: 100vh;
   display: flex;
@@ -43,4 +35,21 @@ input[type='date'] {
 
 .gray-shadow {
   text-shadow: 0 0 7px #0d0d0d;
+}
+
+.react-datepicker {
+  font-family: var(--font-inter), sans-serif;
+  box-shadow: 0 0 20px #171717;
+}
+
+.react-datepicker__header {
+  @apply bg-base-300 border-0;
+}
+
+.react-datepicker__header * {
+  @apply text-zinc-200;
+}
+
+.react-datepicker__navigation-icon {
+  top: 5px;
 }

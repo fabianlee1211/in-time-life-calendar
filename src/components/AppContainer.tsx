@@ -1,4 +1,4 @@
-import SetupForm from './SetupForm';
+import SetupForm from './SetupForm/SetupForm';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useConfig } from '@/hooks';
