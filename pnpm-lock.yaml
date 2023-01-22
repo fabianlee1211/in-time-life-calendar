@@ -15,6 +15,7 @@ specifiers:
   eslint-config-next: 13.1.2
   framer-motion: 8.5.0
   next: 13.1.2
+  next-seo: 5.15.0
   postcss: 8.4.21
   react: 18.2.0
   react-dom: 18.2.0
@@ -33,6 +34,7 @@ dependencies:
   date-fns: 2.29.3
   framer-motion: 8.5.0_biqbaboplfbrettd7655fr4n2y
   next: 13.1.2_biqbaboplfbrettd7655fr4n2y
+  next-seo: 5.15.0_7jnwqgtpcnwg4nzft4b6xlzlfi
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-hook-form: 7.42.1_react@18.2.0
@@ -1924,6 +1926,18 @@ packages:
   /natural-compare/1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
     dev: true
+
+  /next-seo/5.15.0_7jnwqgtpcnwg4nzft4b6xlzlfi:
+    resolution: {integrity: sha512-LGbcY91yDKGMb7YI+28n3g+RuChUkt6pXNpa8FkfKkEmNiJkeRDEXTnnjVtwT9FmMhG6NH8qwHTelGrlYm9rgg==}
+    peerDependencies:
+      next: ^8.1.1-canary.54 || >=9.0.0
+      react: '>=16.0.0'
+      react-dom: '>=16.0.0'
+    dependencies:
+      next: 13.1.2_biqbaboplfbrettd7655fr4n2y
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
 
   /next/13.1.2_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-Rdnnb2YH///w78FEOR/IQ6TXga+qpth4OqFSem48ng1PYYKr6XBsIk1XVaRcIGM3o6iiHnun0nJvkJHDf+ICyQ==}

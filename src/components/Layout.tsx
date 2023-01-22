@@ -1,7 +1,8 @@
 import { Inter } from '@next/font/google';
 import Link from 'next/link';
 import cn from 'classnames';
-import Head from 'next/head';
+import { DefaultSeo } from 'next-seo';
+import seoConfig from 'next-seo.config';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
@@ -10,30 +11,7 @@ const year = new Date().getFullYear();
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <Head>
-        <link
-          rel="apple-touch-icon"
-          sizes="180x180"
-          href="/apple-touch-icon.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href="/favicon-32x32.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href="/favicon-16x16.png"
-        />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="manifest" href="/site.webmanifest" />
-        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#98d58c" />
-        <meta name="msapplication-TileColor" content="#333333" />
-        <meta name="theme-color" content="#333333" />
-      </Head>
+      <DefaultSeo {...seoConfig} />
       <main className={cn(inter.className)}>
         {children}
         <footer className="flex flex-col sm:flex-row justify-between items-center max-w-screen-2xl px-6 lg:px-12 mx-auto py-8 space-y-4 sm:space-y-0 w-full">

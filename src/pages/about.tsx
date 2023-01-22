@@ -1,14 +1,14 @@
-import Head from 'next/head';
+import SEO from '@/components/SEO';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export default function About() {
   return (
     <>
-      <Head>
-        <title>About | In Time Life Calendar</title>
-        <meta name="description" content="Learn about In Time Life Calendar" />
-      </Head>
+      <SEO
+        title="About | In Time Life Calendar"
+        description="Learn about In Time Life Calendar"
+      />
       <article className="mx-auto prose prose-invert my-14 px-6">
         <Link href="/" className="btn btn-sm btn-ghost mb-4 -ml-2">
           Back

@@ -1,13 +1,13 @@
-import Head from 'next/head';
+import SEO from '@/components/SEO';
 import Link from 'next/link';
 
 export default function Privacy() {
   return (
     <>
-      <Head>
-        <title>Privacy Policy | In Time Life Calendar</title>
-        <meta name="description" content="Learn about our privacy policy" />
-      </Head>
+      <SEO
+        title="Privacy Policy | In Time Life Calendar"
+        description="Learn about our privacy policy"
+      />
       <article className="mx-auto prose prose-invert my-14 px-6">
         <Link href="/" className="btn btn-sm btn-ghost mb-4 -ml-2">
           Back
