@@ -12,7 +12,7 @@ const nextConfig = {
   },
   webpack: (config, { dev, isServer }) => {
     if (!dev && isServer) {
-      require('../scripts/gen-sitemap');
+      require('./scripts/gen-sitemap');
     }
 
     return config;
