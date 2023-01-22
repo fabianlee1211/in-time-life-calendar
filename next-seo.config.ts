@@ -1,11 +1,16 @@
 import { DefaultSeoProps } from 'next-seo';
 
-export const siteUrl =
-  process.env.NEXT_PUBLIC_VERCEL_URL === 'development'
-    ? 'http://localhost:3000'
-    : process.env.NEXT_PUBLIC_VERCEL_URL
-    ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-    : 'http://localhost:3000';
+const isProduction = process.env.NEXT_PUBLIC_VERCEL_ENV === 'production';
+const isPreview = process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview';
+const isDev = process.env.NEXT_PUBLIC_VERCEL_ENV === 'development';
+
+export const siteUrl = isDev
+  ? 'http://localhost:3000'
+  : isPreview
+  ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+  : isProduction
+  ? 'https://in-time-life-calendar.com'
+  : 'https://in-time-life-calendar.com';
 
 const seoConfig: DefaultSeoProps = {
   title: 'In Time Life Calendar',

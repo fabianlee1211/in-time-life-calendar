@@ -1,5 +1,14 @@
 const fs = require('fs');
 
+const isPreview = process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview';
+const isProduction = process.env.NEXT_PUBLIC_VERCEL_ENV === 'production';
+
+const siteUrl = isPreview
+  ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+  : isProduction
+  ? 'https://in-time-life-calendar.com'
+  : 'https://in-time-life-calendar.com';
+
 async function genSitemap() {
   const { globby } = await import('globby');
   const pages = await globby([
@@ -13,7 +22,7 @@ async function genSitemap() {
   const pagesToProcess = [...pages];
 
   const paths = pagesToProcess.map((page) => {
-    return page.replace('pages', '').replace('.tsx', '');
+    return page.replace('src/', '').replace('pages', '').replace('.tsx', '');
   });
 
   const sitemap = `
@@ -30,7 +39,7 @@ async function genSitemap() {
 
           return `
             <url>
-              <loc>${`https://${process.env.NEXT_PUBLIC_VERCEL_URL}${route}`}</loc>
+              <loc>${`${siteUrl}${route}`}</loc>
             </url>
           `;
         })
@@ -41,8 +50,8 @@ async function genSitemap() {
   const robots = `
     User-agent: *
     Allow: /
-    Sitemap: https://${process.env.NEXT_PUBLIC_VERCEL_URL}/sitemap.xml
-    Host: https://${process.env.NEXT_PUBLIC_VERCEL_URL}
+    Sitemap: ${siteUrl}/sitemap.xml
+    Host: ${siteUrl}
   `;
 
   // eslint-disable-next-line no-sync
