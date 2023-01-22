@@ -71,34 +71,32 @@ export default function SetupForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <p className="text-2xl font-semibold mb-2">Get Started</p>
       <div className="form-control w-full">
-        <p className="text-2xl font-semibold mb-2">Get Started</p>
-        <div className="form-control">
-          <label className="label" htmlFor="date">
-            <span
-              className={cn('label-text', { 'text-error': !!errors.birthDate })}
-            >
-              What's your birth date?
+        <label className="label" htmlFor="date">
+          <span
+            className={cn('label-text', { 'text-error': !!errors.birthDate })}
+          >
+            What's your birth date?
+          </span>
+        </label>
+        <input
+          type="date"
+          {...register('birthDate')}
+          placeholder="Enter your birth date"
+          className={cn('input input-bordered w-full', {
+            'input-error': !!errors.birthDate
+          })}
+        />
+        <label className="label">
+          {!!errors.birthDate && (
+            <span className="label-text-alt text-error">
+              {errors.birthDate.message}
             </span>
-          </label>
-          <input
-            type="date"
-            {...register('birthDate')}
-            placeholder="Enter your birth date"
-            className={cn('input input-bordered w-full', {
-              'input-error': !!errors.birthDate
-            })}
-          />
-          <label className="label">
-            {!!errors.birthDate && (
-              <span className="label-text-alt text-error">
-                {errors.birthDate.message}
-              </span>
-            )}
-          </label>
-        </div>
+          )}
+        </label>
       </div>
-      <div>
+      <div className="form-control w-full">
         <label className="label" htmlFor="expectedLifespan">
           <span className="label-text">How long do you expect to live?</span>
         </label>
