@@ -5,15 +5,16 @@ import {
   differenceInYears,
   add
 } from 'date-fns';
+import { circIn, motion, Variants } from 'framer-motion';
+import cn from 'classnames';
 import { useInterval } from '@/hooks';
 import Tile from './Tile';
-import { circIn, motion } from 'framer-motion';
 
 const weeksInOneYear = 52;
 const weeksInHalfYear = weeksInOneYear / 2;
 const totalWeeks = Array.from({ length: weeksInOneYear }, (_, i) => i + 1);
 
-const container = {
+const container: Variants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
@@ -26,7 +27,7 @@ const container = {
   }
 };
 
-const item = {
+const item: Variants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1
@@ -58,46 +59,52 @@ export default function Calendar({
           <motion.div
             key={year}
             variants={item}
-            className={`tooltip tooltip-primary grid grid-cols-1 xl:grid-cols-2 gap-1 sm:gap-2 xl:gap-12 mx-auto relative w-max hover:bg-digit/5 ${
-              year % 10 === 0 ? 'mb-8 sm:mb-10' : 'mb-1 sm:mb-2'
-            }`}
+            className={cn(
+              'tooltip tooltip-primary grid grid-cols-1 xl:grid-cols-2 gap-1 sm:gap-2 xl:gap-12 mx-auto relative w-max hover:bg-digit/5',
+              {
+                'mb-8 sm:mb-10': year % 10 === 0,
+                'mb-1 sm:mb-2': year % 10 !== 0
+              }
+            )}
             data-tip={`Year ${year}`}
           >
             <div className="grid gap-1 md:gap-2 grid-flow-col grid-rows-1">
+              {/* Handles the first half of the year */}
               {totalWeeks.slice(0, weeksInHalfYear).map((week) => {
-                const currentWeek = getWeek(week, year);
+                const weekCount = getWeekCount(week, year);
                 // Fills all past years
                 if (year <= maxFillYear) {
-                  return <Tile key={week} week={currentWeek} progress={1} />;
+                  return <Tile key={week} week={weekCount} progress={1} />;
                 } else if (year > maxFillYear + 1) {
                   // Leave all future years empty
-                  return <Tile key={week} week={currentWeek} progress={0} />;
+                  return <Tile key={week} week={weekCount} progress={0} />;
                 } else if (week === remainingWeeksInInteger + 1) {
                   // Fills the current week
                   return (
                     <Tile
                       key={week}
-                      week={currentWeek}
+                      week={weekCount}
                       isActive
                       progress={remainingWeeksFraction}
                     />
                   );
                 } else if (remainingWeeksInInteger >= week) {
                   // Fills all past weeks in a year
-                  return <Tile key={week} week={currentWeek} progress={1} />;
+                  return <Tile key={week} week={weekCount} progress={1} />;
                 }
                 // Leave all future weeks in a year empty
-                return <Tile key={week} week={currentWeek} progress={0} />;
+                return <Tile key={week} week={weekCount} progress={0} />;
               })}
             </div>
             <div className="grid gap-1 md:gap-2 grid-flow-col grid-rows-1">
+              {/* Handles the second half of the year */}
               {totalWeeks.slice(weeksInHalfYear, weeksInOneYear).map((week) => {
-                const currentWeek = getWeek(week, year);
+                const weekCount = getWeekCount(week, year);
 
                 if (year <= maxFillYear) {
-                  return <Tile key={week} week={currentWeek} progress={1} />;
+                  return <Tile key={week} week={weekCount} progress={1} />;
                 } else if (year > maxFillYear + 1) {
-                  return <Tile key={week} week={currentWeek} progress={0} />;
+                  return <Tile key={week} week={weekCount} progress={0} />;
                 } else if (
                   remainingWeeksInInteger >= weeksInHalfYear &&
                   week === remainingWeeksInInteger + 1
@@ -105,7 +112,7 @@ export default function Calendar({
                   return (
                     <Tile
                       key={week}
-                      week={currentWeek}
+                      week={weekCount}
                       isActive
                       progress={remainingWeeksFraction}
                     />
@@ -114,10 +121,10 @@ export default function Calendar({
                   remainingWeeksInInteger > weeksInHalfYear &&
                   remainingWeeksInInteger >= week
                 ) {
-                  return <Tile key={week} week={currentWeek} progress={1} />;
+                  return <Tile key={week} week={weekCount} progress={1} />;
                 }
 
-                return <Tile key={week} week={currentWeek} progress={0} />;
+                return <Tile key={week} week={weekCount} progress={0} />;
               })}
             </div>
           </motion.div>
@@ -127,7 +134,7 @@ export default function Calendar({
   );
 }
 
-function getWeek(week = 1, year = 1) {
+function getWeekCount(week = 1, year = 1) {
   return week + weeksInOneYear * (year - 1);
 }
 
