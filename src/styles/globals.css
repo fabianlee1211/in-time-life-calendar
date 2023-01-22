@@ -23,6 +23,14 @@ h6 {
   letter-spacing: -0.025em;
 }
 
+input[type='date'] {
+  display: block;
+  /* Solution 1 */
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  min-height: 1.2em;
+}
+
 #__next > main {
   min-height: 100vh;
   display: flex;
