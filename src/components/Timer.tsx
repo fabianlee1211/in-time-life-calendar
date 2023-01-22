@@ -65,7 +65,7 @@ export default function Timer({
 
   useInterval(() => calculateTimeLeft(expectedDeath), 1000, isEnded);
 
-  const digitWidth = isMd ? 38 : isSm ? 26 : 16;
+  const digitWidth = isMd ? 38 : isSm ? 26 : 19;
 
   return (
     <motion.div
@@ -76,7 +76,7 @@ export default function Timer({
         delay: 0.5,
         ease: easeIn
       }}
-      className="flex flex-col items-center justify-center py-8"
+      className="flex flex-col items-center justify-center pt-6 pb-4 sticky top-0 w-full z-50 mx-auto bg-base-100"
     >
       <p className="text-center mb-2 text-zinc-700 text-sm font-semibold">{`${expectedLifespan} Years of Living`}</p>
       <p className="text-center mb-2 text-digit">
@@ -90,11 +90,11 @@ export default function Timer({
                 <motion.div
                   data-tip={toTitleCase(type)}
                   className={cn(
-                    'flex relative h-[36px] sm:h-[48px] md:h-[72px] tooltip tooltip-bottom tooltip-primary',
+                    'flex relative h-[40px] sm:h-[48px] md:h-[72px] tooltip tooltip-bottom tooltip-primary',
                     {
-                      'w-[64px] sm:w-[104px] md:w-[156px]': type === 'years',
-                      'w-[16px] sm:w-[26px] md:w-[39px]': type === 'days',
-                      'w-[32px] sm:w-[52px] md:w-[78px]':
+                      'w-[80px] sm:w-[104px] md:w-[156px]': type === 'years',
+                      'w-[20px] sm:w-[26px] md:w-[39px]': type === 'days',
+                      'w-[40px] sm:w-[52px] md:w-[78px]':
                         type !== 'years' && type !== 'days'
                     }
                   )}
@@ -112,7 +112,7 @@ export default function Timer({
                             ease: easeIn
                           }}
                           className={cn(
-                            `text-3xl sm:text-5xl font-thin tabular-nums md:text-7xl tracking-tighter absolute top-0`,
+                            `text-4xl sm:text-5xl font-thin tabular-nums md:text-7xl tracking-tighter absolute top-0`,
                             {
                               'text-digit neon-shadow': !isEnded,
                               'text-zinc-800 gray-shadow': isEnded
@@ -129,10 +129,13 @@ export default function Timer({
               </motion.div>
               {sectionIndex !== entries.length - 1 && (
                 <span
-                  className={cn('mx-2 w-1 h-1 sm:h-2 sm:w-2 rounded-full', {
-                    'bg-digit shadow-neon': !isEnded,
-                    'bg-zinc-800': isEnded
-                  })}
+                  className={cn(
+                    'mx-1 sm:mx-2 w-1 h-1 sm:h-2 sm:w-2 rounded-full',
+                    {
+                      'bg-digit shadow-neon': !isEnded,
+                      'bg-zinc-800': isEnded
+                    }
+                  )}
                 />
               )}
             </React.Fragment>

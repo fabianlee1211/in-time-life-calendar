@@ -53,7 +53,12 @@ export default function Calendar({
     settings;
 
   return (
-    <motion.div variants={container} initial="hidden" animate="show">
+    <motion.div
+      variants={container}
+      initial="hidden"
+      animate="show"
+      className="mt-8"
+    >
       {totalYears.map((year) => {
         return (
           <motion.div
