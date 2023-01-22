@@ -6,7 +6,11 @@ const TimerCalendar = dynamic(
   () => import('../components/TimerCalendarContainer'),
   {
     ssr: false,
-    loading: () => <AppSkeleton />
+    loading: () => (
+      <div className="px-6 lg:px-12 w-full">
+        <AppSkeleton />
+      </div>
+    )
   }
 );
 
