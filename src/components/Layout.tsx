@@ -38,7 +38,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <a
                 target="_blank"
                 rel="noopener noreferrer"
-                href="https://sugarfabby.com"
+                href="https://sugarfabby.com/?utm_campaign=self+promo&utm_source=in-time-life-calendar&utm_medium=textlink"
               >
                 Find Me
               </a>
