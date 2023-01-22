@@ -48,7 +48,7 @@ const schema = z
 
 type FormValues = z.infer<typeof schema>;
 
-export default function BirthDateForm() {
+export default function SetupForm() {
   const router = useRouter();
   const [_, setConfig] = useConfig();
 
@@ -99,7 +99,7 @@ export default function BirthDateForm() {
         </div>
       </div>
       <div>
-        <label className="label">
+        <label className="label" htmlFor="expectedLifespan">
           <span className="label-text">How long do you expect to live?</span>
         </label>
         <label className="input-group">

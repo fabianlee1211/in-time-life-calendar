@@ -1,4 +1,4 @@
-import BirthDateForm from './BirthDateForm';
+import SetupForm from './SetupForm';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useConfig } from '@/hooks';
@@ -24,7 +24,7 @@ export default function AppContainer() {
           <span className="font-semibold text-primary">
             In Time Life Calendar
           </span>{' '}
-          helps you visualize the potential time you have left, and nudges you
+          helps you visualize the potential time you have left, and reminds you
           to make it count.
         </p>
         <Link className="btn btn-outline btn-primary" href="/about">
@@ -32,7 +32,7 @@ export default function AppContainer() {
         </Link>
       </div>
       <div className="md:col-span-5 lg:col-span-4 p-6 bg-zinc-800 border-zinc-700 border-[1px] rounded-lg shadow-md">
-        <BirthDateForm />
+        <SetupForm />
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import { useCallback } from 'react';
 import Calendar from './Calendar';
 import { useConfig } from '@/hooks';
 
-export default function CalendarContainer() {
+export default function TimerCalendarContainer() {
   const router = useRouter();
   const [config, _, remove] = useConfig();
 
