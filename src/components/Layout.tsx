@@ -36,12 +36,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </Head>
       <main className={cn(inter.className)}>
         {children}
-        <footer
-          className={cn(
-            inter.className,
-            'flex flex-col sm:flex-row justify-between items-center max-w-screen-2xl px-6 lg:px-12 mx-auto py-8 space-y-4 sm:space-y-0 w-full'
-          )}
-        >
+        <footer className="flex flex-col sm:flex-row justify-between items-center max-w-screen-2xl px-6 lg:px-12 mx-auto py-8 space-y-4 sm:space-y-0 w-full">
           <p className="text-sm opacity-30">
             {`© ${year} by Fabian Lee | In Time Life Calendar`}
           </p>
