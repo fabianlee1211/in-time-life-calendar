@@ -54,9 +54,9 @@ export default function SetupForm() {
           name="birthDate"
           render={({ field }) => (
             <DatePicker
-              dateFormat="yyyy/MM/dd"
+              dateFormat="yyyy-MM-dd"
               selected={field.value ? new Date(field.value) : null}
-              placeholderText="Enter your birth date"
+              placeholderText="Year-Month-Day"
               onChange={(date) => field.onChange(date)}
               customInput={
                 <input
